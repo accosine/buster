@@ -1,0 +1,21 @@
+{
+  "name": "@accosine/buster",
+  "version": "1.0.1",
+  "description": "Recursively follow all internal links",
+  "main": "buster",
+  "bin": "buster",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "accosine",
+  "contributors": [
+    "Simon Bugert <simon.bugert@gmail.com>",
+    "Duncan Kolba <duncankolba@gmail.com>"
+  ],
+  "repository": "github:accosine/buster",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2"
+  }
+}

@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+
+const url = require('url');
+const axios = require('axios');
+const $ = require('cheerio');
+
+let domain;
+let pages = {};
+
+const filterLinks = (i, el) => ($(el).attr('href') || '').startsWith('/');
+
+const start = async (href = '/') => {
+  try {
+    pages[href] = true;
+    let html = (await axios(url.resolve(domain, href))).data;
+
+    $('a', html)
+      .filter(filterLinks)
+      .each((i, el) => {
+        const href = $(el).attr('href');
+        if (!pages[href]) {
+          start(href);
+        }
+      });
+  } catch (error) {
+    console.log('error', error);
+  }
+};
+switch (process.argv.length) {
+  case 3:
+    domain = process.argv[2];
+    start();
+    break;
+  case 4:
+    domain = process.argv[2];
+    setInterval(() => {
+      pages = {};
+      start();
+    }, process.argv[3]);
+    break;
+  default:
+    console.log(`Usage: 'buster <domain>' to start bustin'
+       'buster <domain> <milliseconds>' to keep bustin'`);
+}
